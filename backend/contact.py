@@ -26,6 +26,7 @@ class Contact(object):
     def create_contact(contact):
         post_handler('contacts', contact)
 
-
 # for i in Contact().data_contacts():
-#    pprint.pprint(i)
+    # pprint.pprint(i)
+
+# print(list(Contact().data_contacts())[0])

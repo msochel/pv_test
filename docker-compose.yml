@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  backend:
+    image: backend
+    build: ./backend
+    command: python app.py
+    ports:
+      - 80
+    environment:
+      VIRTUAL_HOST: "*/backend, */backend/*"
+      VIRTUAL_HOST_WEIGHT: 10
+      DB_HOST: db
+
+  lb:
+    image: dockercloud/haproxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - '80:80'
+      - '1936:1936'
+    links:
+      - backend
+
+volumes:
+    database-storage:
