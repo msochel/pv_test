@@ -1,30 +1,21 @@
 from sanic import Sanic
 from sanic.response import json
-from ticket import Ticket
-from pymongo import MongoClient
 from sanic_cors import CORS
-from uuid import uuid4
 import os
 from database import Database
 
-# data = Ticket().all_tickets()
-# print(list(data))
-
-client = MongoClient(os.getenv('DB_HOST'), 27017)
-db = client['db_freshdesk']
-# print(db)
-# print(list(db.tickets.find()))
 
 app = Sanic()
 
 def get_handler(request):
     if request.method == "GET":
-        return json({ 'data': list(db.tickets.find()) })
+        return json({ 'data': Database().check_tickets_db() })
     return json({ })
+
 
 CORS(app)
 app.add_route(get_handler, '/backend/get', methods=["GET", "OPTIONS"])
-app.add_route(Database().insert_ticket_db(), '/', methods=["POST"])
+app.add_route(Database().insert_ticket_db(), '/', methods=["POST", "OPTIONS"])
 
 
 

@@ -3,12 +3,11 @@ import requests
 
 # Internal libraries
 from pprint import pprint
-import json
 from methods_handler import get_handler
 
 
 class Agent():
-    def all_agent():
+    def data_agent():
         page = 1
         while True:
             agents = get_handler(f'agents?per_page=3&page={page}')

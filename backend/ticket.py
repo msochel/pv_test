@@ -51,7 +51,7 @@ class Ticket():
         'subject' : ['Help Me!', 'Please help', 'Question'],
         'description' : ['the chat channel does not work',
             'how do I make a payment', 'nobody answers me> :('],
-        'responder_id' : [ ticket['_id'] for ticket in Agent.all_agent() ],
+        'responder_id' : [ ticket['_id'] for ticket in Agent.data_agent() ],
         'requester_id' : [ contact['_id'] for contact in Contact().data_contacts() ]
     }
 
@@ -63,15 +63,16 @@ class Ticket():
 
         print(list(dic.keys())[list(dic.values()).index(2)])
 
-    def all_tickets(self):
+    def all_tickets(self, query=""):
         page = 1
         while True:
-            tickets = get_handler(f'tickets?per_page=2&page={page}')
+            tickets = get_handler(f'tickets?per_page=5&page={page}{query}')
             if tickets:
                 for ticket in tickets:
                     yield {
                         '_id': ticket['id'],
                         'updated_at': ticket['updated_at'],
+                        'created_at': ticket['created_at'],
                         'status': self.find_key_by_value('status', ticket['status']),
                         'source': self.find_key_by_value('source', ticket['source']),
                         'priority': self.find_key_by_value('priority', ticket['priority']),
@@ -92,7 +93,7 @@ def create_ticket(num_interactions):
 
 
 # if __name__ == '__main__':
-#    create_ticket(3)
+#     create_ticket(2)
 
 # create_ticket(3)
 for ticker in Ticket().all_tickets():

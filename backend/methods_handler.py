@@ -11,7 +11,8 @@ def get_handler(endpoint):
     req = requests.get(
         f'{api_url}/{endpoint}',
         auth=(api_key, password),
-        headers=headers)
+        headers=headers
+    )
     response = json.loads(req.content)
     if req.status_code == 200:
         return response
