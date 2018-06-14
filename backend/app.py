@@ -2,6 +2,7 @@ from sanic import Sanic
 from sanic.response import json
 from ticket import Ticket
 from pymongo import MongoClient
+from sanic_cors import CORS
 from uuid import uuid4
 import os
 from database import Database
@@ -21,8 +22,9 @@ def get_handler(request):
         return json({ 'data': list(db.tickets.find()) })
     return json({ })
 
-app.add_route(get_handler, '/backend/get', methods=["GET"])
-# app.add_route(Database().insert_ticket_db(), '/', methods=["POST"])
+CORS(app)
+app.add_route(get_handler, '/backend/get', methods=["GET", "OPTIONS"])
+app.add_route(Database().insert_ticket_db(), '/', methods=["POST"])
 
 
 
