@@ -31,7 +31,7 @@ class Ticket():
             'Portal': 2,
             'Phone': 3,
             'Chat': 7,
-            'Mobilhelp': 8,
+            'Mobihelp': 8,
             'Feedback Widget': 9,
             'Outbound Email': 10
         },
