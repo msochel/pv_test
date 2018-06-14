@@ -60,6 +60,7 @@ class Ticket():
             if tickets:
                 for ticket in tickets:
                     yield {
+                        '_id': ticket['id'],
                         'updated_at': ticket['updated_at'],
                         'status': ticket['status'],
                         'source': ticket['source'],
@@ -78,8 +79,8 @@ def create_ticket(num_interactions):
         post_handler('tickets', Ticket().__dict__)
 
 
-if __name__ == '__main__':
-    create_ticket(3)
+# if __name__ == '__main__':
+    # create_ticket(3)
 
 # create_ticket(3)
 
