@@ -71,8 +71,12 @@ class Ticket():
         'subject' : ['Help Me!', 'Please help', 'Question'],
         'description' : ['the chat channel does not work',
             'how do I make a payment', 'nobody answers me> :('],
-        'responder_id' : [ ticket['_id'] for ticket in Agent.data_agent() ],
-        'requester_id' : [ contact['_id'] for contact in Contact().data_contact() ]
+        'responder_id' : [
+            ticket['_id'] for ticket in Agent.data_agent()
+            ],
+        'requester_id' : [
+            contact['_id'] for contact in Contact().data_contact()
+            ]
     }
 
     def find_key_by_value(self, key, value):
@@ -114,12 +118,19 @@ class Ticket():
                         '_id': ticket['id'],
                         'updated_at': ticket['updated_at'],
                         'created_at': ticket['created_at'],
-                        'status': self.find_key_by_value('status', ticket['status']),
-                        'source': self.find_key_by_value('source', ticket['source']),
-                        'priority': self.find_key_by_value('priority', ticket['priority']),
+                        'status': self.find_key_by_value(
+                            'status', ticket['status']
+                            ),
+                        'source': self.find_key_by_value(
+                            'source', ticket['source']
+                            ),
+                        'priority': self.find_key_by_value(
+                            'priority', ticket['priority']
+                            ),
                         'description': ticket['description_text'],
                         'requester_id': ticket['requester_id'],
-                        'name': get_handler(f"contacts/{ticket['requester_id']}")["name"],
+                        'name': get_handler(
+                            f"contacts/{ticket['requester_id']}")["name"],
                         'responder_id': ticket['responder_id'],
                         'type': ticket['type']
                     }

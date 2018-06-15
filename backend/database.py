@@ -12,19 +12,33 @@ class Database(object):
         self.client = MongoClient(os.getenv('DB_HOST'), 27017)
         self.db = self.client['db_freshdesk']
         self.tickets = self.db.tickets
+        self.contacts = self.db.contacts
 
     def insert_ticket_db(self):
-        print("Holaaaaaa")
         data = Ticket().all_tickets()
         for ticket in data:
             try:
-                insert = self.tickets.insert_one(ticket)
+                self.tickets.insert_one(ticket)
             except errors.DuplicateKeyError:
                 print("User already exists")
         return True
 
+    def insert_contact_db(self):
+        data = Contact().data_contact()
+        for contact in data:
+            try:
+                self.contacts.insert_one(contact)
+            except errors.DuplicateKeyError:
+                print("User already exists")
+        return True
+
+
     def check_tickets_db(self):
         return list(self.db.tickets.find())
+
+
+    def check_contacts_db(self):
+        return list(self.db.contacts.find())
 
 
     def __greater_local_date(self, collection, date_type):

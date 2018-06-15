@@ -24,27 +24,48 @@ def cors_headers(request, response):
         response.headers.update(cors_headers)
     return response
 
-def all_data(request):
+
+def all_data_ticket(request):
     if request.method == "GET":
         return json({ 'data': db.check_tickets_db() })
     return json({ })
 
-def gen_tickets(request, number):
-      to_create = int(number)
+def all_data_contact(request):
+    if request.method == "GET":
+        return json({ 'data': db.check_contacts_db() })
+    return json({ })
+
+def create_tickets(request, number_to_create):
+      to_create = int(number_to_create)
       for _ in range(to_create):
           post_handler('tickets', vars(Ticket()))
       print('Done.')
       return json ({"Done": 1})
 
-
 def insert_tickets(request):
       return json ({"Done": db.insert_ticket_db()})
 
+def insert_contacts(request):
+      return json ({"Done": db.insert_contact_db()})
+
+
 
 # CORS(app)
-app.add_route(gen_tickets, '/backend/get/<number>', methods=["GET", "OPTIONS"])
-app.add_route(insert_tickets, '/backend/insert', methods=["GET", "OPTIONS"])
-app.add_route(all_data, '/backend/get', methods=["GET", "OPTIONS"])
+app.add_route(create_tickets,
+    '/backend/get/<number_to_create>', methods=["GET", "OPTIONS"]
+    )
+app.add_route(insert_tickets,
+    '/backend/insert', methods=["GET", "OPTIONS"]
+    )
+app.add_route(insert_contacts,
+    '/backend/insert_contacts', methods=["GET", "OPTIONS"]
+    )
+app.add_route(all_data_ticket,
+    '/backend/get_ticket', methods=["GET", "OPTIONS"]
+    )
+app.add_route(all_data_contact,
+    '/backend/get_contact', methods=["GET", "OPTIONS"]
+    )
 
 
 

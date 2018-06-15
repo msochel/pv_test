@@ -23,7 +23,7 @@ class App extends Component {
 
     ComponentDidMount() {
       request
-      .get('http://localhost/backend/get')
+      .get('http://localhost/backend/get_ticket')
       .set('Accept', 'application/json')
       .then(res => {
         this.setState({
