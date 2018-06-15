@@ -1,11 +1,9 @@
-import requests
-import json
-import pprint
-from methods_handler import post_handler, get_handler
+# Internal modules
+from views import post_handler, get_handler
 
 class Contact(object):
 
-    def data_contacts(self):
+    def data_contact(self):
         page = 1
         while True:
             contacts = get_handler(f'contacts?per_page=2&page={page}')
@@ -25,7 +23,3 @@ class Contact(object):
 
     def create_contact(contact):
         post_handler('contacts', contact)
-
-
-# for i in Contact().data_contacts():
-#    pprint.pprint(i)

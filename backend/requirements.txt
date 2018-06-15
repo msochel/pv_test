@@ -1,0 +1,4 @@
+pymongo
+sanic
+Sanic-Cors
+requests

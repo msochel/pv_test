@@ -1,14 +1,9 @@
-# External libraries
-import requests
-
-# Internal libraries
-from pprint import pprint
-import json
-from methods_handler import get_handler
+# Internal modules
+from views import get_handler
 
 
 class Agent():
-    def all_agent():
+    def data_agent():
         page = 1
         while True:
             agents = get_handler(f'agents?per_page=3&page={page}')
@@ -25,7 +20,3 @@ class Agent():
                 page += 1
             else:
                 break
-
-
-# for agent in Agent.all_agent():
-#     pprint(agent)

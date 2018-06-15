@@ -1,5 +1,9 @@
-import requests
+# Internal libreries
 import json
+
+# External libreries
+import requests
+from sanic import response as res
 
 api_url = 'https://msochel.freshdesk.com/api/v2'
 api_key = 'gAMalklkrYAQPTvsscu'
@@ -11,7 +15,8 @@ def get_handler(endpoint):
     req = requests.get(
         f'{api_url}/{endpoint}',
         auth=(api_key, password),
-        headers=headers)
+        headers=headers
+    )
     response = json.loads(req.content)
     if req.status_code == 200:
         return response
@@ -26,6 +31,4 @@ def post_handler(endpoint, data):
         data=json.dumps(data)
     )
     response = json.loads(req.content)
-    if req.status_code == 201:
-        return response
-    return req.status_code
+    return res.json( response )
