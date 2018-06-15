@@ -18,6 +18,8 @@ class Database(object):
 
 
     def insert_data(self, collection='contact'):
+        if not collection in ('ticket'):
+            raise ValueError('The collection must be ticket')
         data = self._contact.data_contact()
         db_collection = self.contacts
         if collection == 'ticket':
@@ -31,68 +33,38 @@ class Database(object):
         return True
 
 
-    def insert_ticket_db(self):
-        data = Ticket().all_tickets()
-        for ticket in data:
-            try:
-                self.tickets.insert_one(ticket)
-            except errors.DuplicateKeyError:
-                print("User already exists")
-        return True
-
-    def insert_contact_db(self):
-        data = Contact().data_contact()
-        for contact in data:
-            try:
-                self.contacts.insert_one(contact)
-            except errors.DuplicateKeyError:
-                print("User already exists")
-        return True
-
     def check_data(self, collection):
+        if not collection in ('ticket', 'contact'):
+            raise ValueError('The collection must be ticket or contact')
         db_collection = self.db.tickets if collection == 'ticket' else self.db.contacts
         return list(db_collection.find())
 
 
-    def __greater_local_date(self, collection, date_type):
-        if not date_type in ('created', 'updated'):
-            raise ValueError('The date type must be \'created\' or \'updated\'')
-
-        date_field: str = 'created_at' if date_type == 'created' else 'updated_at'
+    def update_date_big(self, collection):
+        key = 'updated_at'
         try:
             return collection.find(
-                {},{date_field: 1, '_id': 0}
-            ).sort(date_field, -1).limit(1)[0][date_field]
+                {},{key: 1, '_id': 0}
+            ).sort(key, -1).limit(1)[0][key]
         except IndexError as ie:
             return '1-1-1'
 
-    def update_data(self, collection, save=False):
-        # Selects que class for queries
-        Queries = Ticket()
 
-        updated_gld = self.__greater_local_date(collection, 'updated')
-        update_records_found = Ticket().data_tickets(
-            f'&updated_since={updated_gld}')
+    def update_data(self, collection):
+        updated_at_big = self.update_date_big(collection)
+        update_records_found = self._ticket.data_tickets(
+            f'&updated_since={updated_at_big}')
 
         for update in itertools.islice(update_records_found, 1, None):
-            collection.update_one({'_id': update['_id']}, {'$set': update})
+            collection.update_one(
+                {'_id': update['_id']},
+                {'$set': update},
+                upsert=True
+            )
 
         return update_records_found
 
 
-# obj = Database()
-    def test(self):
-        self.insert_ticket_db()
-        # print(self.__greater_local_date(self.db.tickets, 'updated'))
-        # for x in itertools.islice(self.update_data(self.db.tickets), 1, None):
-        #    pprint(x)
-        # print(self.__greater_local_date(self.db.tickets, 'created'))
+    def update_in_db(self):
         self.update_data(self.db.tickets)
-    # print(obj.database, )
-# insert_user_db(obj.check_tickets_db())
-
-if __name__ == '__main__':
-    obj = Database()
-    # obj.insert_ticket_db()
-    # obj.test()
-# pprint(list(db.tickets.find()))
+        return True

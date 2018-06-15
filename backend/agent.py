@@ -1,5 +1,5 @@
 # Internal modules
-from methods_handler import get_handler
+from views import get_handler
 
 
 class Agent():

@@ -1,8 +1,10 @@
+# Internal libraries
 from random import choice
-import pprint
+
+# Internal modules
 from agent import Agent
 from contact import Contact
-from methods_handler import post_handler, get_handler
+from views import post_handler, get_handler
 
 class Ticket():
     '''

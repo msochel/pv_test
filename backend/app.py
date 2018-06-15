@@ -1,10 +1,14 @@
-from sanic import Sanic
-from sanic.response import json
-from sanic_cors import CORS
-import os
+# Internal modules
 from database import Database
 from ticket import Ticket
-from methods_handler import post_handler
+from views import post_handler
+
+# External libraries
+from sanic import Sanic
+from sanic.response import json
+
+# Internal libraries
+import os
 
 
 app = Sanic()
@@ -48,14 +52,15 @@ def insert_tickets(request):
 def insert_contacts(request):
       return json ({"Done": db.insert_data()})
 
+def update_contacts(request):
+      return json ({"Done": db.update_in_db()})
 
 
-# CORS(app)
 app.add_route(create_tickets,
-    '/backend/get/<number_to_create>', methods=["GET", "OPTIONS"]
+    '/backend/create/<number_to_create>', methods=["GET", "OPTIONS"]
     )
 app.add_route(insert_tickets,
-    '/backend/insert', methods=["GET", "OPTIONS"]
+    '/backend/insert_ticket', methods=["GET", "OPTIONS"]
     )
 app.add_route(insert_contacts,
     '/backend/insert_contacts', methods=["GET", "OPTIONS"]
@@ -65,6 +70,9 @@ app.add_route(all_data_ticket,
     )
 app.add_route(all_data_contact,
     '/backend/get_contact', methods=["GET", "OPTIONS"]
+    )
+app.add_route(update_contacts,
+    '/backend/update_ticker', methods=["GET", "OPTIONS"]
     )
 
 

@@ -78,17 +78,18 @@ class App extends Component {
 
         return (
           <div>
-              <h1>Table  </h1>
+              <h1>Tickets  </h1>
               <div className="content-section implementation">
                 <DataTable ref={(el) => this.dt = el} value={this.state.interactions} paginator={true} responsive={true} rows={10} header={header}
                       globalFilter={this.state.globalFilter}>
+                      <Column field="updated_at" header="Date" filter={true}  sortable={true} filterMatchMode="contains"/>
                       <Column field="name" header="Name" filter={true} filterMatchMode="contains" sortable={true} />
+                      <Column field="requester_id" header="Integration ID" filter={true} filterMatchMode="contains" />
                       <Column field="description" header="Description" filter={true} filterMatchMode="contains"/>
-                      <Column field="priority" header="Priority" filter={true} filterMatchMode="contains"/>
-                      <Column field="source" header="Source" filter={true} filterElement={sourceFilter}/>
-                      <Column field="status" header="Status" filter={true} filterElement={statusFilter}/>
                       <Column field="type" header="Type" filter={true} filterMatchMode="contains"/>
-                      <Column field="updated_at" header="Date" filter={true}  sortable={true} />
+                      <Column field="priority" header="Priority" filter={true} filterMatchMode="contains"/>
+                      <Column field="status" header="Status" filter={true} filterElement={statusFilter}/>
+                      <Column field="source" header="Source" filter={true} filterElement={sourceFilter}/>
                   </DataTable>
               </div>
           </div>

@@ -9,7 +9,7 @@ import 'primereact/resources/primereact.min.css';
 cruze | cupertino | darkness | flick | home | kasper | lightness | ludvig
 omega | pepper-grinder | redmond | rocket | south-street | start | trontastic
 voclain */
-import 'primereact/resources/themes/redmond/theme.css';
+import 'primereact/resources/themes/kasper/theme.css';
 
 
 ReactDOM.render(<App />, document.getElementById('root'));

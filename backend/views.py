@@ -1,5 +1,8 @@
-import requests
+# Internal libreries
 import json
+
+# External libreries
+import requests
 from sanic import response as res
 
 api_url = 'https://msochel.freshdesk.com/api/v2'

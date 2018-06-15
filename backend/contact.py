@@ -1,4 +1,5 @@
-from methods_handler import post_handler, get_handler
+# Internal modules
+from views import post_handler, get_handler
 
 class Contact(object):
 
