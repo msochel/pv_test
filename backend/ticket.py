@@ -97,7 +97,7 @@ class Ticket():
 
         print(list(dic.keys())[list(dic.values()).index(2)])
 
-    def all_tickets(self, query=""):
+    def data_tickets(self, query=""):
         '''
         Recover the tickets from the api
 

@@ -13,6 +13,23 @@ class Database(object):
         self.db = self.client['db_freshdesk']
         self.tickets = self.db.tickets
         self.contacts = self.db.contacts
+        self._ticket = Ticket()
+        self._contact = Contact()
+
+
+    def insert_data(self, collection='contact'):
+        data = self._contact.data_contact()
+        db_collection = self.contacts
+        if collection == 'ticket':
+            data = self._ticket.data_tickets()
+            db_collection = self.tickets
+        for row in data:
+            try:
+                db_collection.insert_one(row)
+            except errors.DuplicateKeyError:
+                print("User already exists")
+        return True
+
 
     def insert_ticket_db(self):
         data = Ticket().all_tickets()
@@ -32,13 +49,9 @@ class Database(object):
                 print("User already exists")
         return True
 
-
-    def check_tickets_db(self):
-        return list(self.db.tickets.find())
-
-
-    def check_contacts_db(self):
-        return list(self.db.contacts.find())
+    def check_data(self, collection):
+        db_collection = self.db.tickets if collection == 'ticket' else self.db.contacts
+        return list(db_collection.find())
 
 
     def __greater_local_date(self, collection, date_type):
@@ -58,7 +71,7 @@ class Database(object):
         Queries = Ticket()
 
         updated_gld = self.__greater_local_date(collection, 'updated')
-        update_records_found = Ticket().all_tickets(
+        update_records_found = Ticket().data_tickets(
             f'&updated_since={updated_gld}')
 
         for update in itertools.islice(update_records_found, 1, None):

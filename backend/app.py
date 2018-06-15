@@ -27,12 +27,12 @@ def cors_headers(request, response):
 
 def all_data_ticket(request):
     if request.method == "GET":
-        return json({ 'data': db.check_tickets_db() })
+        return json({ 'data': db.check_data('ticket') })
     return json({ })
 
 def all_data_contact(request):
     if request.method == "GET":
-        return json({ 'data': db.check_contacts_db() })
+        return json({ 'data': db.check_data('contact') })
     return json({ })
 
 def create_tickets(request, number_to_create):
@@ -43,10 +43,10 @@ def create_tickets(request, number_to_create):
       return json ({"Done": 1})
 
 def insert_tickets(request):
-      return json ({"Done": db.insert_ticket_db()})
+      return json ({"Done": db.insert_data('ticket')})
 
 def insert_contacts(request):
-      return json ({"Done": db.insert_contact_db()})
+      return json ({"Done": db.insert_data()})
 
 
 
