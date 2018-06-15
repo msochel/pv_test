@@ -5,7 +5,20 @@ from contact import Contact
 from methods_handler import post_handler, get_handler
 
 class Ticket():
-    '''docstring for CreateTicket.'''
+    '''
+    Interaction with tickets. Recover and create tickets randomly
+
+       Attributes: All the parameters of Ticket
+            - subject: String
+            - status: Integer
+            - source: Integer
+            - priority: Integer
+            - description: String
+            - requester_id: Integer
+            - responder_id: Integer
+            - type: String
+    '''
+
     def __init__(self):
         self.subject = self.select_value('subject')
         self.status = self.select_value('status')
@@ -18,6 +31,15 @@ class Ticket():
 
 
     def select_value(self, field):
+        '''
+        select a random value to create the ticket
+
+        Parameter:
+            - field: key of dict field_ticket.
+
+        Return:
+            - value random of a dict
+        '''
         if type(self.field_ticket[field]) is dict:
             return choice(list(self.field_ticket[field].values()))
         return choice(self.field_ticket[field])
@@ -54,6 +76,16 @@ class Ticket():
     }
 
     def find_key_by_value(self, key, value):
+        '''
+        Search for the key of a dictionary by means of its value
+
+        Parameter:
+            - key: key of dict field_ticket.
+            - value: value to search key
+
+        Return:
+            - the key corresponding to the value
+        '''
         keys = list(self.field_ticket[key].keys())
         value_pos = list(self.field_ticket[key].values()).index(value)
         return keys[value_pos]
@@ -62,6 +94,17 @@ class Ticket():
         print(list(dic.keys())[list(dic.values()).index(2)])
 
     def all_tickets(self, query=""):
+        '''
+        Recover the tickets from the api
+
+        Parameter:
+            - query: query to search. String
+
+        Return:
+            - A generator of all tickets from api
+        '''
+
+
         page = 1
         while True:
             tickets = get_handler(f'tickets?per_page=5&page={page}{query}')
@@ -83,8 +126,3 @@ class Ticket():
                 page += 1
             else:
                 break
-
-
-    def create_ticket(self, num_interaction):
-        for _ in range(num_interactions):
-            post_handler('tickets', Ticket().__dict__)
