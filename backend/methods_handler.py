@@ -1,5 +1,6 @@
 import requests
 import json
+from sanic import response as res
 
 api_url = 'https://msochel.freshdesk.com/api/v2'
 api_key = 'gAMalklkrYAQPTvsscu'
@@ -27,6 +28,4 @@ def post_handler(endpoint, data):
         data=json.dumps(data)
     )
     response = json.loads(req.content)
-    if req.status_code == 201:
-        return response
-    return req.status_code
+    return res.json( response )

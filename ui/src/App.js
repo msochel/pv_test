@@ -29,6 +29,7 @@ class App extends Component {
         this.setState({
           interactions: res.body.data
         });
+        console.log(res)
       })
       .catch(err => {
         console.log(err);

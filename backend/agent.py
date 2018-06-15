@@ -1,8 +1,4 @@
-# External libraries
-import requests
-
-# Internal libraries
-from pprint import pprint
+# Internal modules
 from methods_handler import get_handler
 
 
@@ -24,7 +20,3 @@ class Agent():
                 page += 1
             else:
                 break
-
-
-# for agent in Agent.all_agent():
-#     pprint(agent)

@@ -1,6 +1,4 @@
 from random import choice
-import requests
-import json
 import pprint
 from agent import Agent
 from contact import Contact
@@ -52,7 +50,7 @@ class Ticket():
         'description' : ['the chat channel does not work',
             'how do I make a payment', 'nobody answers me> :('],
         'responder_id' : [ ticket['_id'] for ticket in Agent.data_agent() ],
-        'requester_id' : [ contact['_id'] for contact in Contact().data_contacts() ]
+        'requester_id' : [ contact['_id'] for contact in Contact().data_contact() ]
     }
 
     def find_key_by_value(self, key, value):
@@ -87,15 +85,6 @@ class Ticket():
                 break
 
 
-def create_ticket(num_interactions):
-    for _ in range(num_interactions):
-        post_handler('tickets', Ticket().__dict__)
-
-
-# if __name__ == '__main__':
-#     create_ticket(2)
-
-# create_ticket(3)
-for ticker in Ticket().all_tickets():
-    pprint.pprint(ticker)
-# print(vars(obj))
+    def create_ticket(self, num_interaction):
+        for _ in range(num_interactions):
+            post_handler('tickets', Ticket().__dict__)
