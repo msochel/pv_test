@@ -1,9 +1,13 @@
+# Internal libraries
+import os
+import itertools
+
+# Internal modules
 from contact import Contact
 from ticket import Ticket
+
+# External libraries
 from pymongo import MongoClient, errors
-import os
-from pprint import pprint
-import itertools
 
 
 class Database(object):
